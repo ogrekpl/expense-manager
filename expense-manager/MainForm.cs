@@ -10,26 +10,17 @@ using System.Windows.Forms;
 
 namespace expense_manager
 {
-	public partial class Form1 : Form
+	public partial class MainForm : Form
 	{
-		private List<string> profilesLisy = new List<string>();
-		DataBase d1 = new DataBase("expenseManagerDB.db");
-
-		public Form1()
+		public MainForm()
 		{
 			InitializeComponent();
 		}
 
-		public void LoadToPicker()
+		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
-			
+			Application.OpenForms["Form1"].Close();
+			base.OnFormClosed(e);
 		}
-
-		private void button2_Click(object sender, EventArgs e)
-		{
-
-		}
-
-
 	}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace expense_manager
 {
-	class Expense
+	public class Expense
 	{
 		private double _ammount;
 		public double Ammount => _ammount;

@@ -10,12 +10,11 @@ using System.IO;
 
 namespace expense_manager
 {
-	class DataBase
+	public class DataBase
 	{
 		private string dbName;
 		private SQLiteConnection sql_con; // database handler
 		private SQLiteCommand sql_cmd; // command to execute 
-		//private string adress = @"E:\Projekty\C#\expense-manager\expense-manager\";
 		private string path = @"C:\ProgramData\ExpenseManager\db\";
 
 		public DataBase(string name)
