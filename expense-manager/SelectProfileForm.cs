@@ -27,7 +27,6 @@ namespace expense_manager
 			LoadProfiles();
 			ProfilePicker.Items.Clear();
 			LoadToPicker();
-
 		}
 
 		private void LoadToPicker()
@@ -41,7 +40,7 @@ namespace expense_manager
 		private void CreateProfile()
 		{
 			Form addProfileForm = new AddProfileForm(dataBase);
-			addProfileForm.Show();
+			addProfileForm.ShowDialog();
 		}
 
 		private void LoadProfiles()
@@ -61,9 +60,12 @@ namespace expense_manager
 
 		private void SelectButton_Click(object sender, EventArgs e)
 		{
-			Form mainForm = new MainForm();
-			this.Hide();
-			mainForm.Show();
+			if (ProfilePicker.Text.Length > 0)
+			{
+				Form mainForm = new MainForm(ProfilePicker.Text, dataBase);
+				this.Hide();
+				mainForm.Show();
+			}
 		}
 	}
 }

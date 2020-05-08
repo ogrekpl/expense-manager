@@ -51,6 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditExpenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditExpenseForm.Designer.cs">
+      <DependentUpon>EditExpenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddExpenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddExpenseForm.Designer.cs">
+      <DependentUpon>AddExpenseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataBase.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="AddProfileForm.cs">
@@ -58,6 +70,12 @@
     </Compile>
     <Compile Include="AddProfileForm.Designer.cs">
       <DependentUpon>AddProfileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExpenseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExpenseControl.Designer.cs">
+      <DependentUpon>ExpenseControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SelectProfileForm.cs">
       <SubType>Form</SubType>
@@ -73,8 +91,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EditExpenseForm.resx">
+      <DependentUpon>EditExpenseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddExpenseForm.resx">
+      <DependentUpon>AddExpenseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddProfileForm.resx">
       <DependentUpon>AddProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExpenseControl.resx">
+      <DependentUpon>ExpenseControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>SelectProfileForm.cs</DependentUpon>
@@ -106,7 +133,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataBase\" />
+    <Folder Include="Forms\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pictures\Icons\x button.png" />

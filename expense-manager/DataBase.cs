@@ -62,6 +62,7 @@ namespace expense_manager
 			                       "amount REAL," +
 			                       "category_id	INTEGER, " +
 			                       "description_id INTEGER," +
+								   "day INTEGER, " +
 			                       "month INTEGER, " +
 			                       "year INTEGER," +
 			                       "profile_id INTEGER)";
@@ -91,7 +92,7 @@ namespace expense_manager
 
 		public void AddExpense(Expense ex1)
 		{
-			int catergory_id;
+			int category_id;
 			int description_id;
 			int profile_id;
 
@@ -106,7 +107,7 @@ namespace expense_manager
 			sql_cmd.Parameters.AddWithValue("@name", ex1.Category);
 			SQLiteDataReader result = sql_cmd.ExecuteReader();
 			result.Read();
-			catergory_id = Convert.ToInt32(result[0]);
+			category_id = Convert.ToInt32(result[0]);
 			result.Close();
 			sql_con.Close();
 
@@ -135,12 +136,13 @@ namespace expense_manager
 			result.Close();
 			sql_con.Close();
 
-			quarry = "INSERT INTO expense (`amount`, `category_id`, `description_id`, `month`, `year`, `profile_id`) " +
-					 "VALUES (@amount, @category_id, @description_id, @month, @year, @profile_id)";
+			quarry = "INSERT INTO expense (`amount`, `category_id`, `description_id`, `day`, `month`, `year`, `profile_id`) " +
+					 "VALUES (@amount, @category_id, @description_id, @day, @month, @year, @profile_id)";
 			sql_cmd = new SQLiteCommand(quarry, sql_con);
 			sql_cmd.Parameters.AddWithValue("@amount", ex1.Ammount);
-			sql_cmd.Parameters.AddWithValue("@category_id", catergory_id);
+			sql_cmd.Parameters.AddWithValue("@category_id", category_id);
 			sql_cmd.Parameters.AddWithValue("@description_id", description_id);
+			sql_cmd.Parameters.AddWithValue("@day", ex1.Day);
 			sql_cmd.Parameters.AddWithValue("@month", ex1.Month);
 			sql_cmd.Parameters.AddWithValue("@year", ex1.Year);
 			sql_cmd.Parameters.AddWithValue("@profile_id", profile_id);
@@ -155,14 +157,70 @@ namespace expense_manager
 			ExecuteNonQuery();
 		}
 
+		public void UpdateExpense(int id, Expense ex1)
+		{
+			//get cat_id
+
+			string quarry = "INSERT OR IGNORE INTO Category (`name`) VALUES (@name)";
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@name", ex1.Category);
+			ExecuteNonQuery();
+
+			quarry = "SELECT id FROM Category WHERE name = @name";
+			sql_con.Open();
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@name", ex1.Category);
+			SQLiteDataReader result = sql_cmd.ExecuteReader();
+			result.Read();
+			int category_id = Convert.ToInt32(result[0]);
+			result.Close();
+			sql_con.Close();
+
+			//get disc_id
+
+			quarry = "INSERT INTO Description (`text`) VALUES (@text)";
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@text", ex1.Description);
+			ExecuteNonQuery();
+
+			quarry = "SELECT id FROM Description WHERE (`text`) = @text";
+			sql_con.Open();
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@text", ex1.Description);
+			result = sql_cmd.ExecuteReader();
+			result.Read();
+			int description_id =Convert.ToInt32(result[0]);
+			result.Close();
+			sql_con.Close();
+
+			//edit
+			quarry = "UPDATE Expense SET amount=@amount, category_id=@category_id, description_id=@description_id, day=@day, month=@month, year=@year WHERE ID = @id";
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@amount", ex1.Ammount);
+			sql_cmd.Parameters.AddWithValue("@category_id", category_id);
+			sql_cmd.Parameters.AddWithValue("@description_id", description_id);
+			sql_cmd.Parameters.AddWithValue("@day", ex1.Day);
+			sql_cmd.Parameters.AddWithValue("@month", ex1.Month);
+			sql_cmd.Parameters.AddWithValue("@year", ex1.Year);
+			sql_cmd.Parameters.AddWithValue("@id", id);
+			ExecuteNonQuery();
+
+
+		}
+
+		public void DeleteExpense(int id)
+		{
+			string quarry = "DELETE FROM Expense WHERE id = @id";
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@id", id);
+			ExecuteNonQuery();
+		}
+
 		public List<Expense> GetExpenses(string profile)
 		{
 			int COLUMNS = 6; 
 			List<Expense> expensesList = new List<Expense>();
-			string quarry = "SELECT Expense.amount, Category.name, Description.text, Expense.month, Expense.year, Profile.name " +
-			                "FROM Expense JOIN Category JOIN Description JOIN Profile " +
-			                "ON Expense.category_id = Category.id AND Expense.description_id = Description.id AND Expense.profile_id = Profile.id" +
-			                "WHERE Profile.name = @profile";
+			string quarry = "SELECT Expense.amount, Category.name, Description.text, Expense.day, Expense.month, Expense.year, Profile.name, Expense.id FROM Expense JOIN Category JOIN Description JOIN Profile ON Expense.category_id = Category.id AND Expense.description_id = Description.id AND Expense.profile_id = Profile.id WHERE Profile.name = @profile";
 
 			sql_con.Open();
 			sql_cmd = new SQLiteCommand(quarry, sql_con);
@@ -170,6 +228,7 @@ namespace expense_manager
 			SQLiteDataReader result = sql_cmd.ExecuteReader();
 			if (result.HasRows)
 			{
+				int count = 0;
 				while (result.Read())
 				{
 					expensesList.Add(new Expense(
@@ -178,7 +237,10 @@ namespace expense_manager
 						Convert.ToString(result[2]),
 						Convert.ToInt32(result[3]),
 						Convert.ToInt32(result[4]),
-						Convert.ToString(result[5])));
+						Convert.ToInt32(result[5]),
+						Convert.ToString(result[6])));
+					expensesList[count].AddId(Convert.ToInt32(result[7]));
+					count++;
 				}
 			}
 			result.Close();
