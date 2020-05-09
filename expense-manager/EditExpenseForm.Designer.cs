@@ -60,7 +60,7 @@ namespace expense_manager
 			this.categoryPicker.FormattingEnabled = true;
 			this.categoryPicker.Location = new System.Drawing.Point(310, 147);
 			this.categoryPicker.Name = "categoryPicker";
-			this.categoryPicker.Size = new System.Drawing.Size(121, 32);
+			this.categoryPicker.Size = new System.Drawing.Size(228, 32);
 			this.categoryPicker.TabIndex = 4;
 			// 
 			// descriptionInput
@@ -68,7 +68,7 @@ namespace expense_manager
 			this.descriptionInput.Font = new System.Drawing.Font("Century Gothic", 15.75F);
 			this.descriptionInput.Location = new System.Drawing.Point(310, 202);
 			this.descriptionInput.Name = "descriptionInput";
-			this.descriptionInput.Size = new System.Drawing.Size(81, 29);
+			this.descriptionInput.Size = new System.Drawing.Size(228, 29);
 			this.descriptionInput.TabIndex = 5;
 			this.descriptionInput.Text = "";
 			// 
@@ -135,9 +135,9 @@ namespace expense_manager
 			this.ammountInput.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.ammountInput.Location = new System.Drawing.Point(310, 99);
 			this.ammountInput.Name = "ammountInput";
-			this.ammountInput.Size = new System.Drawing.Size(81, 29);
+			this.ammountInput.Size = new System.Drawing.Size(114, 29);
 			this.ammountInput.TabIndex = 13;
-			this.ammountInput.Text = "test";
+			this.ammountInput.Text = "";
 			// 
 			// EditExpenseForm
 			// 
@@ -155,7 +155,7 @@ namespace expense_manager
 			this.Controls.Add(this.categoryPicker);
 			this.Controls.Add(this.editButton);
 			this.Name = "EditExpenseForm";
-			this.Text = "AddExpenseForm";
+			this.Text = "Edytuj wydatek";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

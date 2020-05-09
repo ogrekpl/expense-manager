@@ -270,13 +270,14 @@ namespace expense_manager
 			return profilesList;
 		}
 
-		public List<string> GetCategories()
+		public List<string> GetCategories(string profile)
 		{
 			List<string> categoryList = new List<string>();
 
-			string quarry = "SELECT name FROM Category";
+			string quarry = "SELECT Category.name FROM Expense JOIN Category JOIN Profile ON Expense.category_id = Category.id AND Expense.profile_id = Profile.id WHERE Profile.name = @profile";
 			sql_con.Open();
 			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@profile", profile);
 			SQLiteDataReader result = sql_cmd.ExecuteReader();
 			if (result.HasRows)
 			{
@@ -287,7 +288,6 @@ namespace expense_manager
 			}
 			result.Close();
 			sql_con.Close();
-
 			return categoryList;
 		}
 	}

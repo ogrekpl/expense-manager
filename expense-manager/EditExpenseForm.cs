@@ -16,6 +16,7 @@ namespace expense_manager
 		private DataBase dataBase;
 		private string profileName;
 		private int expense_id;
+		private List<string> categories;
 
 		public EditExpenseForm(string profile, DataBase db, int expense_id)
 		{
@@ -23,6 +24,8 @@ namespace expense_manager
 			profileName = profile;
 			dataBase = db;
 			this.expense_id = expense_id;
+			categories = dataBase.GetCategories(profileName);
+			LoadToPicker();
 		}
 
 		private void editButton_Click(object sender, EventArgs e)
@@ -47,6 +50,17 @@ namespace expense_manager
 			MainForm form = Application.OpenForms["MainForm"] as MainForm;
 			form.RefreshPanel();
 			MessageBox.Show("Wydatek został edytowany!");
+		}
+
+		private void LoadToPicker()
+		{
+			if (categories != null)
+			{
+				foreach (string category in categories)
+				{
+					categoryPicker.Items.Add(category);
+				}
+			}
 		}
 	}
 }

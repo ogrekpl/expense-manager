@@ -14,6 +14,7 @@ namespace expense_manager
 	{
 		private Expense expense;
 		private DataBase dataBase;
+		private List<string> categories;
 
 		private string profileName;
 		public AddExpenseForm(string profile, DataBase db)
@@ -21,6 +22,8 @@ namespace expense_manager
 			InitializeComponent();
 			profileName = profile;
 			dataBase = db;
+			categories = dataBase.GetCategories(profileName);
+			LoadToPicker();
 		}
 
 		private void addButton_Click(object sender, EventArgs e)
@@ -45,6 +48,17 @@ namespace expense_manager
 			MainForm form = Application.OpenForms["MainForm"] as MainForm;
 			form.RefreshPanel();
 			MessageBox.Show("Wydatek został dodany!");
+		}
+
+		private void LoadToPicker()
+		{
+			if (categories != null)
+			{
+				foreach (string category in categories)
+				{
+					categoryPicker.Items.Add(category);
+				}
+			}
 		}
 	}
 }
