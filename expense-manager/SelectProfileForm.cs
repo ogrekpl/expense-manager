@@ -63,8 +63,8 @@ namespace expense_manager
 			if (ProfilePicker.Text.Length > 0)
 			{
 				Form mainForm = new MainForm(ProfilePicker.Text, dataBase);
-				this.Hide();
 				mainForm.Show();
+				this.Hide();
 			}
 		}
 	}

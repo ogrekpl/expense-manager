@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,169 @@ namespace expense_manager
 		public void AddId(int id)
 		{
 			_id = id;
+		}
+	}
+
+	public class ExpenseCompareAmmLH : IComparer<Expense>
+	{
+		public int Compare(Expense exp1, Expense exp2)
+		{
+			if (exp1 == null)
+			{
+				if (exp2 == null)
+				{
+					return 0;
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			else 
+			{
+				if (exp2 == null)
+				{
+					return 1;
+				}
+				else
+				{
+					if (exp1.Ammount > exp2.Ammount)
+					{
+						return 1;
+					}
+					else if (exp1.Ammount == exp2.Ammount)
+					{
+						return 0;
+					}
+					else
+					{
+						return -1;
+					}
+				}
+			}
+		}
+	}
+	public class ExpenseCompareAmmHL : IComparer<Expense>
+	{
+		public int Compare(Expense exp1, Expense exp2)
+		{
+			if (exp1 == null)
+			{
+				if (exp2 == null)
+				{
+					return 0;
+				}
+				else
+				{
+					return 1;
+				}
+			}
+			else 
+			{
+				if (exp2 == null)
+				{
+					return -1;
+				}
+				else
+				{
+					if (exp1.Ammount > exp2.Ammount)
+					{
+						return -1;
+					}
+					else if (exp1.Ammount == exp2.Ammount)
+					{
+						return 0;
+					}
+					else
+					{
+						return 1;
+					}
+				}
+			}
+		}
+	}
+	public class ExpenseComaprerDateLH : IComparer<Expense>
+	{
+		public int Compare(Expense exp1, Expense exp2)
+		{
+			if (exp1 == null)
+			{
+				if (exp2 == null)
+				{
+					return 0;
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				if (exp2 == null)
+				{
+					return 1;
+				}
+				else
+				{
+					DateTime exp1DateTime = new DateTime(exp1.Year, exp1.Month, exp1.Day);
+					DateTime exp2DateTime = new DateTime(exp2.Year, exp2.Month, exp2.Day);
+
+					if (exp1DateTime > exp2DateTime)
+					{
+						return 1;
+					}
+					else if (exp1DateTime == exp2DateTime)
+					{
+						return 0;
+					}
+					else
+					{
+						return -1;
+					}
+				}
+			}
+		}
+	}
+	public class ExpenseComaprerDateHL : IComparer<Expense>
+	{
+		public int Compare(Expense exp1, Expense exp2)
+		{
+			if (exp1 == null)
+			{
+				if (exp2 == null)
+				{
+					return 0;
+				}
+				else
+				{
+					return 1;
+				}
+			}
+			else
+			{
+				if (exp2 == null)
+				{
+					return -1;
+				}
+				else
+				{
+					DateTime exp1DateTime = new DateTime(exp1.Year, exp1.Month, exp1.Day);
+					DateTime exp2DateTime = new DateTime(exp2.Year, exp2.Month, exp2.Day);
+
+					if (exp1DateTime > exp2DateTime)
+					{
+						return -1;
+					}
+					else if (exp1DateTime == exp2DateTime)
+					{
+						return 0;
+					}
+					else
+					{
+						return 1;
+					}
+				}
+			}
 		}
 	}
 }

@@ -45,7 +45,7 @@ namespace expense_manager
 			{
 				throw exception;
 			}
-			MainForm form = Application.OpenForms["MainForm"] as MainForm;
+			ExpensesForm form = Application.OpenForms["ExpensesForm"] as ExpensesForm;
 			form.RefreshPanel();
 			MessageBox.Show("Wydatek został dodany!");
 		}

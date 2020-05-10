@@ -49,7 +49,7 @@ namespace expense_manager
 			}
 			else
 			{
-				text += expense.Day.ToString();
+				text += expense.Day.ToString() + ".";
 			}
 
 			if (expense.Month < 10)
@@ -58,7 +58,7 @@ namespace expense_manager
 			}
 			else
 			{
-				text += expense.Month.ToString();
+				text += expense.Month.ToString() + ".";
 			}
 
 			text += expense.Year.ToString();
@@ -68,7 +68,7 @@ namespace expense_manager
 
 		private void delete_button_Click(object sender, EventArgs e)
 		{
-			MainForm form = Application.OpenForms["MainForm"] as MainForm;
+			ExpensesForm form = Application.OpenForms["ExpensesForm"] as ExpensesForm;
 			form.DataBase.DeleteExpense(Expense.Id);
 			form.RefreshPanel();
 			MessageBox.Show("Wydatek został pomyslnie usunięty!");

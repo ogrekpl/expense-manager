@@ -77,6 +77,18 @@
     <Compile Include="ExpenseControl.Designer.cs">
       <DependentUpon>ExpenseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExpensesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExpensesForm.Designer.cs">
+      <DependentUpon>ExpensesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlotsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlotsForm.Designer.cs">
+      <DependentUpon>PlotsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,11 +115,17 @@
     <EmbeddedResource Include="ExpenseControl.resx">
       <DependentUpon>ExpenseControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExpensesForm.resx">
+      <DependentUpon>ExpensesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>SelectProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlotsForm.resx">
+      <DependentUpon>PlotsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

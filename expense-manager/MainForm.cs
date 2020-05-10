@@ -16,50 +16,63 @@ namespace expense_manager
 		public DataBase DataBase => _dataBase;
 		private string _profileName;
 		public string ProfileName => _profileName;
-		private List<Expense> expenses;
+		private Form activeForm = null;
 		public MainForm(string profile, DataBase db)
 		{
 			InitializeComponent();
 			_profileName = profile;
 			_dataBase = db;
-			expenses = _dataBase.GetExpenses(_profileName);
-			LoadExpenseControls(expenses);
 		}
 
-		public void RefreshPanel()
+		private void showSubMenu(Panel subMenu)
 		{
-			panel1.Controls.Clear();
-			expenses = _dataBase.GetExpenses(_profileName);
-			LoadExpenseControls(expenses);
-		}
-
-		protected override void OnFormClosed(FormClosedEventArgs e)
-		{
-			Application.OpenForms["Form1"].Close();
-			base.OnFormClosed(e);
-		}
-
-		private void addExpenseButton_Click(object sender, EventArgs e)
-		{
-			Form addExpenseForm = new AddExpenseForm(_profileName, _dataBase);
-			addExpenseForm.ShowDialog();
-		}
-
-		private void LoadExpenseControls(List<Expense> exps)
-		{
-			foreach (var expense in exps)
+			if (!subMenu.Visible)
 			{
-				ExpenseControl expenseControl = new ExpenseControl(expense);
-				expenseControl.Location = new Point(10, panel1.Controls.Count * (expenseControl.Height + 30));
-				panel1.Controls.Add(expenseControl);
+				subMenu.Visible = true;
+			}
+			else
+			{
+				subMenu.Visible = false;
 			}
 		}
 
-		private void AddToPanel(Expense expense)
+		private void buttonExpenses_Click(object sender, EventArgs e)
 		{
-			ExpenseControl expenseControl = new ExpenseControl(expense);
-			expenseControl.Location = new Point(10, panel1.Controls.Count * (expenseControl.Height + 30));
-			panel1.Controls.Add(expenseControl);
+			openChildForm(new ExpensesForm(ProfileName, DataBase));
+		}
+
+		private void openChildForm(Form childForm)
+		{
+			if (activeForm != null)
+			{
+				activeForm.Close();
+			}
+
+			activeForm = childForm;
+			childForm.TopLevel = false;
+			childForm.FormBorderStyle = FormBorderStyle.None;
+			childForm.Dock = DockStyle.Fill;
+			panelChildForm.Controls.Add(childForm);
+			panelChildForm.Tag = childForm;
+			childForm.BringToFront();
+			childForm.Show();
+		}
+
+		private void buttonPlots_Click(object sender, EventArgs e)
+		{
+			openChildForm(new PlotsForm(DataBase, ProfileName));
+		}
+
+		private void buttonChangeProfile_Click(object sender, EventArgs e)
+		{
+			Form1 form = new Form1();
+			this.Hide();
+			form.Show();
+		}
+
+		private void buttonExit_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
 		}
 	}
 }
