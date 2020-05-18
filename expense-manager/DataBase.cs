@@ -290,5 +290,29 @@ namespace expense_manager
 			sql_con.Close();
 			return categoryList;
 		}
+
+		public List<string> GetYears(string profile)
+		{
+			List<string> yearsList = new List<string>();
+			string quarry = "SELECT year FROM Expense JOIN Profile On Expense.profile_id=Profile.id WHERE Profile.name = @profile";
+			sql_con.Open();
+			sql_cmd = new SQLiteCommand(quarry, sql_con);
+			sql_cmd.Parameters.AddWithValue("@profile", profile);
+			SQLiteDataReader result = sql_cmd.ExecuteReader();
+			if (result.HasRows)
+			{
+				while (result.Read())
+				{
+					if (!yearsList.Contains(Convert.ToString(result[0])))
+					{
+						yearsList.Add(Convert.ToString(result[0]));
+					}
+				}
+			}
+			result.Close();
+			sql_con.Close();
+
+			return yearsList;
+		}
 	}
 }
