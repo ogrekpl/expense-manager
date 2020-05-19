@@ -31,25 +31,42 @@ namespace expense_manager
 			InitPicker2();
 		}
 
-		//event when index changed draw plot
+		/// <summary>
+		/// This method is called when pickerType index is changed.
+		/// It draws plot which is selected by user.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void pickerType_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			DrawPlot(pickerType.SelectedItem as PlotTypes);
 		}
 
-		//event when index changed show more options
+		/// <summary>
+		/// This method is called when pickerDate index is changed.
+		/// It initialize pickerDataSub depends on option is selected by user in pickerDate.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void pickerDate_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			InitPicker3();
 		}
 
-		//event when index changed draw plot
+		/// <summary>
+		/// This method is called when pickerDataSub index is changed.
+		/// It draws line plot. Data shown in plot depends on selected options in previous pickers.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void pickerDataSub_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			DrawPlot(pickerType.SelectedItem as PlotTypes);
 		}
 
-		//iniy plot types avaible
+		/// <summary>
+		/// This method adds avaible plotTypes.
+		/// </summary>
 		private void PlotTypesInit()
 		{
 			plotTypes.Add(new PlotTypes("Liniowy", plotTypes.Count, SeriesChartType.Line));
@@ -57,7 +74,9 @@ namespace expense_manager
 			plotTypes.Add(new PlotTypes("Kołowy", plotTypes.Count, SeriesChartType.Pie));
 		}
 
-		//init picker1
+		/// <summary>
+		/// This method initialize availble options in plotTypes. Getting options form plotTypes.
+		/// </summary>
 		private void InitPicker()
 		{
 			PlotTypesInit();
@@ -67,7 +86,9 @@ namespace expense_manager
 			}
 		}
 
-		//init picker2
+		/// <summary>
+		/// This method initialize pickerDate options.
+		/// </summary>
 		private void InitPicker2()
 		{
 			picker2Options.Add("Dzień");
@@ -80,7 +101,9 @@ namespace expense_manager
 			}
 		}
 
-		//init picker3
+		/// <summary>
+		/// This method initialize pickerDataSub options.
+		/// </summary>
 		private void InitPicker3()
 		{
 			pickerDataSub.Items.Clear();
@@ -122,7 +145,10 @@ namespace expense_manager
 			}
 		}
 
-		//drawplot - depends of type
+		/// <summary>
+		/// This method draws plot depends on type given in parm.
+		/// </summary>
+		/// <param name="type">Plot type</param>
 		private void DrawPlot(PlotTypes type)
 		{
 			if (type.Type == SeriesChartType.Pie)
@@ -149,7 +175,9 @@ namespace expense_manager
 			}
 		}
 
-		//Reseting plot for new data
+		/// <summary>
+		/// This methond is reseting plot
+		/// </summary>
 		private void ResetPlot()
 		{
 			chart1.Series.Clear();
@@ -157,7 +185,10 @@ namespace expense_manager
 			chart1.Legends.Clear();
 		}
 
-		//drawing piechart
+
+		/// <summary>
+		/// This method is drawing pie chart
+		/// </summary>
 		private void DrawPieChart()
 		{
 			string seriesName = "Pie";
@@ -197,7 +228,9 @@ namespace expense_manager
 			}
 		}
 
-		//drawing columnchart
+		/// <summary>
+		/// This method is drawing column chart
+		/// </summary>
 		private void DrawColumnChart()
 		{
 			string seriesName = "Column";
@@ -227,7 +260,9 @@ namespace expense_manager
 			}
 		}
 
-		//drawing linechart
+		/// <summary>
+		/// This method is drawing line chart
+		/// </summary>
 		private void DrawLineChart()
 		{
 			Dictionary<int, double> data;
@@ -267,8 +302,10 @@ namespace expense_manager
 				chart1.Legends.Add("legend");
 			}
 		}
-
-		//create dictionary from database as data for piechart
+		/// <summary>
+		/// This method creates dictionary with data for pie chart and column chart from data base.
+		/// </summary>
+		/// <returns>Dictionary: key - category(string), value money spent(double)</returns>
 		private Dictionary<string, double> LoadDataToChart()
 		{
 			List<Expense> expenses = dataBase.GetExpenses(profileName);
@@ -288,8 +325,13 @@ namespace expense_manager
 			return data;
 		}
 
-		//parm1 0: day, 1: month, 2: year | parm2 : if parm1: 0 - 1-12 (months) of parm1: 1 year{xxxx} for example 2020|
-		//parm3: if option: 0 - year {xxxx} 
+		/// <summary>
+		/// This method creates dictionary with data for line chart from data base.
+		/// </summary>
+		/// <param name="parm1">0: day, 1: month, 2: year</param>
+		/// <param name="parm2">parm2 : if parm1: 0 - 1-12 (means months); parm1: 1 - year{xxxx}</param>
+		/// <param name="parm3">if parm1: 0 - year {xxxx}</param>
+		/// <returns></returns>
 		private Dictionary<int, double> LoadDataToLine(int parm1, int parm2, int parm3)
 		{
 			Dictionary<int, double> data = new Dictionary<int, double>();
